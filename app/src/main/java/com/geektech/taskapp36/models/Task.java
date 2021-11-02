@@ -3,8 +3,8 @@ package com.geektech.taskapp36.models;
 import java.io.Serializable;
 
 public class Task implements Serializable {
-private String text;
-private long createdAt;
+    private String text;
+    private long createdAt;
 
     public Task(String text, long createdAt) {
         this.text = text;
