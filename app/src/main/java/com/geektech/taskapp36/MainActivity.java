@@ -1,6 +1,7 @@
 package com.geektech.taskapp36;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -12,8 +13,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.geektech.taskapp36.databinding.ActivityMainBinding;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
-private NavController navController;
+    private NavController navController;
     private ActivityMainBinding binding;
 
     @Override
@@ -32,6 +35,25 @@ private NavController navController;
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.navigation_home ||
+                    destination.getId() == R.id.navigation_dashboard ||
+                    destination.getId() == R.id.navigation_notifications ||
+                    destination.getId() == R.id.profileFragment) {
+                navView.setVisibility(View.VISIBLE);
+            } else {
+                navView.setVisibility(View.GONE);
+            }
+
+            if (destination.getId() == R.id.boardFragment) {
+                Objects.requireNonNull(getSupportActionBar()).hide();
+            } else {
+                Objects.requireNonNull(getSupportActionBar()).show();
+            }
+        });
+
+        navController.navigate(R.id.boardFragment);
     }
 
     @Override
